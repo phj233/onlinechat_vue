@@ -1,15 +1,12 @@
-import { MessageReactive } from "naive-ui";
+import {createDiscreteApi} from "naive-ui";
 
-const naiveMessage = useMessage();
-export const showMessage = (status:number|string) : MessageReactive => {
-    let message:string = "";
-    switch (status) {
-        case 0:
-            message = "SUCCESS";
-            naiveMessage.success(message);
-            break;
-        default:
-            message = `连接出错(${status})!`;
+const naiveMessage = createDiscreteApi(["message"]).message
+export const showMessage = (status:number,info:String) => {
+    if (status === 0) {
+        // @ts-ignore
+        naiveMessage.success(info)
+    }else {
+        // @ts-ignore
+        naiveMessage.error(info)
     }
-    return naiveMessage.error(`${message}，请检查网络或联系管理员！`);
 };

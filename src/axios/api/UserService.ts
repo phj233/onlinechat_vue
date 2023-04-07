@@ -1,8 +1,8 @@
 import {request} from "../axios";
 
 export class UserService{
-    static async login(username:string,password:string):Promise<any>{
-        return request(`/login?username=${username}&password=${password}`,null,'POST')
+    static async login(username:String,password:String):Promise<any>{
+        return request('/login?username='+username+'&password='+password,'','POST')
     }
 
     static async register(user:any):Promise<any>{

@@ -8,13 +8,14 @@ const instance = axios.create({
     timeout: 10000
 })
 
-const userStore = useUserStore()
 // 请求拦截器
 instance.interceptors.request.use(
+
     config => {
+        const userStore = useUserStore()
         // 在发送请求之前做些什么
         // 例如，设置请求头、添加请求参数、处理跨域问题等
-        if (userStore.token !== "" && userStore.token !== null) {
+        if (userStore.token !== '' && userStore.token !== null) {
             config.headers.Authorization = userStore.token
         }
         return config
@@ -48,9 +49,9 @@ export function request(url = '', data?: any, type = 'POST'):Promise<any>{
         }
         // @ts-ignore
         promise.then(response=>{
-            resolve(response)
+            resolve(response.data)
         }).catch(error=>{
-            reject(error)
+            reject(error.data)
         })
     })
 }

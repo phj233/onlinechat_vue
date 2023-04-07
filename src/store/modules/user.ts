@@ -33,26 +33,40 @@ export const useUserStore = defineStore({
             this.token = ""
             this.userinfo = null
         },
-        async login(username: string, password: string) {
+        isAdmin(): boolean {
+            //@ts-ignore
+            return this.userinfo?.role.split(',').includes('admin')
+        },
+        async login( username: string, password: string ): Promise<any>{
             try {
-                const res = await UserService.login(username, password)
-                if (res.status === 0) {
-                    this.setToken(res.data.token)
-                    this.setUserinfo(res.data.userinfo)
-                    return res
-                }
+                return  await UserService.login(username, password).then((res) => {
+                    if (res.code === 0) {
+                        this.token = res.data.token
+                        this.userinfo = res.data.userinfo
+                    }
+                    return Promise.resolve(res)
+                })
+            }catch (e) {
+                return Promise.reject(e)
+            }
+        },
+        async register(user:{
+            username: string;
+            password: string;
+            email: string;
+        }): Promise<any> {
+            try {
+                const res = await UserService.register(user)
                 return Promise.resolve(res)
             }catch (e) {
                 return Promise.reject(e)
             }
         },
-
-        async getUserInfo() {
+        async getUserInfo():Promise<any> {
             try {
                 const res = await UserService.userinfo()
                 if (res.status === 0) {
                     this.setUserinfo(res.data.userInfo)
-                    return res
                 }
                 return Promise.resolve(res)
             }catch (e) {
@@ -71,7 +85,6 @@ export const useUserStore = defineStore({
                 return Promise.reject(e)
             }
         }
-
     },
     persist: true
 

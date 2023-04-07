@@ -1,10 +1,9 @@
 import {NIcon} from "naive-ui";
 import {RouterLink} from "vue-router";
-import {Icon} from "@iconify/vue";
 
 export const renderIcon = (data:String) => {
     // @ts-ignore
-    return h(NIcon,()=>null,h(
+    return h(NIcon,()=>null,() => h(
         Icon,{
             icon: data
         },()=>null
@@ -17,6 +16,6 @@ export const renderLink = (label:String,name:String) => {
         to: {
             name: name
         }
-    }, {default: () => label})
+    },  {default: () => label})
 
 }
