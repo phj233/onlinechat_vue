@@ -35,6 +35,7 @@ router.beforeEach((to, from, next) => {
         next('/login')
     }else {
         const res:Promise<any> = UserService.checktoken()
+        // @ts-ignore
         if (res.code !==0) {
             naiveMessage.error('token失效，请重新登录')
             next('/login')
