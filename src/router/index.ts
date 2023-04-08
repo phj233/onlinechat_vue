@@ -2,21 +2,48 @@ import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import {useUserStore} from "../store/modules/user";
 import {UserService} from "../axios/api/UserService";
 import {createDiscreteApi} from "naive-ui";
-const routes:RouteRecordRaw[] = [
+export const routes:RouteRecordRaw[] = [
     {
         path: '/',
         name: 'Home',
-        component: () => import('../view/Home.vue')
+        component: () => import('../view/Home.vue'),
+        meta: {
+            title: '首页'
+        }
     },
     {
         path: '/login',
         name: 'Login',
-        component: () => import('../view/Login.vue')
+        component: () => import('../view/Login.vue'),
+        meta: {
+            title: '登录'
+        }
     },
     {
         path: '/admin',
         name: 'Admin',
-        component: () => import('../view/Admin.vue')
+        component: () => import('../view/Admin.vue'),
+        meta: {
+            title: '管理中心'
+        },
+        children: [
+            {
+                path: 'account',
+                name: 'Account',
+                component: () => import('../layout/admin/Account.vue'),
+                meta: {
+                    title: '个人账号'
+                }
+            },
+            {
+                path: 'group',
+                name: 'Group',
+                component: () => import('../layout/admin/Group.vue'),
+                meta: {
+                    title: '个人群组'
+                }
+            }
+            ]
     }
     ]
 
@@ -39,7 +66,6 @@ router.beforeEach((to, from, next) => {
         UserService.checktoken().then(res => {
             console.log(res)
             if(res.code === 0){
-                naiveMessage.success('token有效,登录成功')
                 next()
             }else{
                 naiveMessage.error('token已过期，请重新登录')

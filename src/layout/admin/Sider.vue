@@ -1,5 +1,5 @@
 <template>
-<n-layout-sider>
+<n-layout-sider bordered show-trigger width="200" collapse-mode="width" :collapsed-width="50">
   <n-menu :options="menuOptions" @update:value="logout"/>
 </n-layout-sider>
 </template>
@@ -25,14 +25,12 @@ const menuOptions: MenuOption[] = [
         icon: () => renderIcon('ion:home')
     },
     {
-        label: '个人账号',
-            // () => renderLink('个人账号', 'Account'),
+        label: () => renderLink('个人账号', 'Account'),
         key: 'account',
         icon: () => renderIcon('mdi:person-circle')
     },
     {
-        label: '个人群组',
-            // () => renderLink('个人群组', 'AccountGroup'),
+        label: () => renderLink('个人群组', 'Group'),
         key: 'group',
         icon: () => renderIcon('material-symbols:group')
     },
@@ -57,8 +55,8 @@ const menuOptions: MenuOption[] = [
     },
     {
         label: '群组管理',
-            // () => renderLink('群组管理', 'Group'),
-        key: 'group',
+            // () => renderLink('群组管理', 'GroupManage'),
+        key: 'groupManage',
         show: showAdminMenu,
         icon: () => renderIcon('heroicons:user-group-solid'),
         children: [

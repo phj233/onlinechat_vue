@@ -43,7 +43,5 @@ const switchActive = ref(false);
     margin-left: auto;
     align-items: center;
     justify-content: space-between;
-
-
 }
 </style>
